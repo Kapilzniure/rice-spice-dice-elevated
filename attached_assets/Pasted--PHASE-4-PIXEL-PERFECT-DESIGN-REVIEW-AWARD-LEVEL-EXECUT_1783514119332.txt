@@ -1,0 +1,435 @@
+# PHASE 4 — PIXEL-PERFECT DESIGN REVIEW & AWARD-LEVEL EXECUTION
+
+The website has already been built.
+
+It has already been refined.
+
+It already has premium UI.
+
+Now assume this website is being submitted for:
+
+• Awwwards Site of the Day
+• CSS Design Awards
+• FWA
+• Best Retail Website Australia
+• Client presentation where a $30,000 agency is competing against us
+
+Your job is NOT to redesign.
+
+Your job is to obsess over every detail until nothing feels average.
+
+You are now acting as one team consisting of:
+
+• Creative Director
+• Design Director
+• Senior Product Designer
+• Art Director
+• Brand Strategist
+• Motion Designer
+• UX Researcher
+• Accessibility Expert
+• Frontend Performance Engineer
+• Retail Experience Consultant
+• Photography Director
+• Food Stylist
+• Copy Director
+
+Everyone reviews the website together.
+
+Nobody accepts "good enough."
+
+---
+
+# RULE ZERO
+
+Whenever something looks generic...
+
+Redesign it.
+
+Whenever something feels empty...
+
+Give it purpose.
+
+Whenever something looks copied from another grocery website...
+
+Replace it.
+
+Whenever something looks like an AI template...
+
+Remove it.
+
+The final website must feel custom-made for Rice Spice Dice.
+
+---
+
+# CREATE A VISUAL SIGNATURE
+
+If someone hides the logo,
+
+people should still recognize the website.
+
+Create a distinctive visual identity using:
+
+• curved editorial layouts
+
+• subtle organic shapes inspired by grains, spices and leaves
+
+• premium yellow accents
+
+• generous whitespace
+
+• elegant photography composition
+
+• consistent corner radius
+
+• custom section dividers
+
+• sophisticated card hierarchy
+
+Everything should belong to one design language.
+
+---
+
+# EVERY SCREEN MUST HAVE A HERO MOMENT
+
+Every major section should contain one unforgettable visual.
+
+Not another grid.
+
+Not another card layout.
+
+One dominant focal point.
+
+Examples:
+
+A dramatic close-up of fresh vegetables covered in morning mist.
+
+Beautiful premium chicken photography.
+
+A cinematic spice display.
+
+Sunlight hitting fresh fruit.
+
+Families shopping together.
+
+Warm human interaction.
+
+Scrolling should constantly reward curiosity.
+
+---
+
+# ELEVATE PHOTOGRAPHY
+
+Assume every image comes from a professional food photographer.
+
+Use photography that feels:
+
+Natural
+
+Warm
+
+Real
+
+Fresh
+
+Organic
+
+Premium
+
+Never use cliché supermarket images.
+
+Avoid artificial lighting.
+
+Avoid awkward stock models.
+
+Avoid fake smiles.
+
+Photography should communicate quality before words do.
+
+---
+
+# MAKE THE CHICKEN SECTION UNFORGETTABLE
+
+Treat fresh chicken like a premium product.
+
+The section should immediately communicate:
+
+Fresh every morning.
+
+Prepared with care.
+
+Trusted quality.
+
+Perfect for family meals.
+
+Show elegant product presentation.
+
+Beautiful lighting.
+
+Close-up textures.
+
+Editorial composition.
+
+Premium typography.
+
+Subtle quality badges.
+
+Cooking inspiration.
+
+This section alone should make someone want to visit the store.
+
+---
+
+# IMPROVE VISUAL RHYTHM
+
+Audit the entire homepage.
+
+Remove repetitive layouts.
+
+Avoid stacking similar sections.
+
+Alternate:
+
+Editorial
+
+Split layouts
+
+Immersive photography
+
+Storytelling blocks
+
+Large typography
+
+Minimal content
+
+Unexpected spacing
+
+Wide galleries
+
+Magazine compositions
+
+Create movement through layout instead of animation.
+
+---
+
+# CREATE SCROLL REWARDS
+
+Every 20–30% of scrolling should reveal something memorable.
+
+Examples:
+
+A seasonal fruit spotlight.
+
+Today's Fresh Picks.
+
+A beautiful quote about family meals.
+
+An animated recipe reveal.
+
+A full-width cinematic image.
+
+An interactive country showcase.
+
+A premium review section.
+
+Scrolling should never become predictable.
+
+---
+
+# MICROCOPY AUDIT
+
+Every word matters.
+
+Replace boring labels with language that feels human.
+
+Instead of:
+
+Products
+
+Use:
+
+Explore Fresh Ingredients
+
+Instead of:
+
+Categories
+
+Use:
+
+Find Your Favourite Flavours
+
+Instead of:
+
+About
+
+Use:
+
+Our Story
+
+Instead of:
+
+Contact
+
+Use:
+
+Visit Us
+
+Small wording improvements should make the website feel crafted rather than generated.
+
+---
+
+# DESIGN FOR EMOTION
+
+Ask throughout the experience:
+
+Does this section make someone hungry?
+
+Does it make someone trust the quality?
+
+Does it remind someone of cooking with family?
+
+Does it create curiosity?
+
+Does it encourage a visit?
+
+If not—
+
+Improve it.
+
+---
+
+# BUILD BUSINESS VALUE INTO THE DESIGN
+
+Every section must support at least one business goal:
+
+Increase store visits.
+
+Increase time on site.
+
+Increase trust.
+
+Encourage return visits.
+
+Promote weekly specials.
+
+Highlight unique international products.
+
+Improve local brand recognition.
+
+Strengthen community perception.
+
+If a section contributes nothing—
+
+Remove it.
+
+---
+
+# PERFORMANCE AUDIT
+
+Reduce unnecessary DOM elements.
+
+Improve image optimization.
+
+Improve responsiveness.
+
+Improve Lighthouse.
+
+Improve Core Web Vitals.
+
+Avoid layout shifts.
+
+Optimize animation performance.
+
+Everything should feel effortless.
+
+---
+
+# MOBILE EXPERIENCE
+
+Do not adapt desktop to mobile.
+
+Design mobile as its own premium experience.
+
+One-handed navigation.
+
+Thumb-friendly spacing.
+
+Readable typography.
+
+Fast image loading.
+
+Elegant gestures.
+
+Sticky call-to-actions where appropriate.
+
+---
+
+# CONSISTENCY CHECK
+
+Audit every component.
+
+Buttons.
+
+Inputs.
+
+Cards.
+
+Icons.
+
+Corner radius.
+
+Spacing.
+
+Typography.
+
+Animations.
+
+Shadows.
+
+Borders.
+
+Everything should feel like it belongs to one premium design system.
+
+---
+
+# CLIENT PRESENTATION MODE
+
+Assume the owner opens the homepage and spends only 90 seconds looking through it.
+
+Within those 90 seconds they should feel:
+
+"This reflects the quality of our store."
+
+"Our products deserve this presentation."
+
+"Our competitors don't have this."
+
+"This makes us look more established."
+
+"This would help bring customers into the store."
+
+If any section fails to create that feeling—
+
+Improve it.
+
+---
+
+# FINAL STANDARD
+
+This should no longer feel like a website built by AI.
+
+It should feel like a handcrafted digital flagship created by a world-class creative agency.
+
+Every pixel should have intention.
+
+Every interaction should have purpose.
+
+Every image should tell a story.
+
+Every section should increase trust.
+
+Every animation should feel invisible.
+
+Every word should strengthen the brand.
+
+The final result should be polished enough that a client believes this is the future of Rice Spice Dice—not just a website, but the beginning of a stronger digital presence.

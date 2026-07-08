@@ -84,6 +84,55 @@ function Reveal({
   );
 }
 
+/* ------------------------------ Signature FX ----------------------------- */
+
+/** Organic curved seam between sections of different background tones — part of the
+ * site's visual signature (inspired by a grain husk / leaf edge) instead of a hard cut. */
+function OrganicSeam({
+  fromClass = "text-cream",
+  flip = false,
+}: {
+  fromClass?: string;
+  flip?: boolean;
+}) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`pointer-events-none relative z-10 -mb-px h-14 w-full overflow-hidden md:h-20 ${
+        flip ? "-scale-y-100" : ""
+      }`}
+    >
+      <svg
+        viewBox="0 0 1200 90"
+        preserveAspectRatio="none"
+        className={`h-full w-full ${fromClass}`}
+      >
+        <path
+          d="M0,32 C180,90 320,0 540,28 C760,56 880,4 1040,20 C1120,28 1160,44 1200,36 L1200,90 L0,90 Z"
+          fill="currentColor"
+        />
+      </svg>
+    </div>
+  );
+}
+
+/** Faint organic blob accent (grain/leaf silhouette) used as a background texture cue. */
+function OrganicBlob({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 200 200"
+      className={`pointer-events-none absolute text-saffron/[0.08] ${className}`}
+    >
+      <path
+        fill="currentColor"
+        d="M45.8,-58.6C58.6,-49.6,67.4,-33.7,71.1,-16.6C74.8,0.5,73.5,18.9,65.3,33.4C57.1,47.9,42,58.6,25.3,65.2C8.6,71.8,-9.7,74.3,-26.3,69.5C-42.9,64.6,-57.8,52.4,-66.1,36.9C-74.4,21.5,-76.1,2.9,-71.9,-13.6C-67.7,-30.1,-57.6,-44.5,-44.2,-53.5C-30.8,-62.5,-15.4,-66.2,1.6,-68.1C18.5,-70,37.1,-70.1,45.8,-58.6Z"
+        transform="translate(100 100)"
+      />
+    </svg>
+  );
+}
+
 /* --------------------------------- Nav ---------------------------------- */
 
 function Nav() {
@@ -364,8 +413,9 @@ const extraCats = [
 
 function Categories() {
   return (
-    <section id="categories" className="relative py-28 lg:py-36">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+    <section id="categories" className="relative overflow-hidden py-28 lg:py-36">
+      <OrganicBlob className="-right-16 top-10 h-72 w-72" />
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
         <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
           <SectionHead
             eyebrow="Shop by Category"
@@ -529,22 +579,32 @@ function ChickenExperience() {
             </div>
           </Reveal>
           <Reveal delay={0.25}>
-            <div className="absolute -bottom-6 -left-4 hidden max-w-xs rounded-2xl bg-cream p-5 text-ink shadow-lift md:block">
-              <div className="flex items-center gap-2 text-saffron-deep">
-                <Star className="h-4 w-4 fill-current" />
-                <Star className="h-4 w-4 fill-current" />
-                <Star className="h-4 w-4 fill-current" />
-                <Star className="h-4 w-4 fill-current" />
-                <Star className="h-4 w-4 fill-current" />
-              </div>
-              <p className="mt-2 text-sm leading-snug">
-                "Honestly the best chicken in Kogarah — always fresh, always trimmed properly."
-              </p>
-              <div className="mt-2 text-xs text-muted-foreground">— Rania, local since 2019</div>
+            <div className="absolute -bottom-8 -left-6 hidden w-56 overflow-hidden rounded-[1.5rem] shadow-lift ring-4 ring-ink md:block">
+              <img
+                src={spicesImg}
+                alt="Marinade spices used on our chicken cuts"
+                loading="lazy"
+                width={500}
+                height={500}
+                className="h-56 w-full object-cover"
+              />
             </div>
           </Reveal>
         </div>
       </div>
+
+      <div className="relative mx-auto mt-20 max-w-4xl px-6 text-center lg:px-10">
+        <Reveal>
+          <Drumstick className="mx-auto h-6 w-6 text-saffron" />
+          <p className="mt-6 font-display text-2xl leading-snug text-cream/90 md:text-3xl">
+            "Honestly the best chicken in Kogarah —{" "}
+            <span className="italic text-saffron">always fresh, always trimmed properly.</span>"
+          </p>
+          <div className="mt-4 text-sm text-cream/50">— Rania, local since 2019</div>
+        </Reveal>
+      </div>
+
+      <OrganicSeam fromClass="text-background" />
     </section>
   );
 }
@@ -674,6 +734,8 @@ function InternationalFlavours() {
           ))}
         </div>
       </div>
+
+      <OrganicSeam fromClass="text-background" />
     </section>
   );
 }
@@ -849,8 +911,9 @@ const recipes = [
 
 function Recipes() {
   return (
-    <section id="recipes" className="relative py-28 lg:py-36">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+    <section id="recipes" className="relative overflow-hidden py-28 lg:py-36">
+      <OrganicBlob className="-left-20 bottom-0 h-80 w-80" />
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
         <SectionHead
           eyebrow="Recipe Inspiration"
           title={
@@ -1007,30 +1070,57 @@ function Testimonials() {
             </div>
           </Reveal>
         </div>
-        <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
-          {reviews.map((r, i) => (
-            <Reveal key={r.name} delay={i * 0.08}>
-              <figure className="card-lift flex h-full flex-col rounded-3xl border border-border bg-card p-8 shadow-soft">
-                <div className="flex items-center gap-1 text-saffron-deep">
+        <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-5">
+          <Reveal>
+            <figure className="card-lift relative flex h-full flex-col justify-between overflow-hidden rounded-3xl bg-ink p-10 text-cream shadow-lift lg:col-span-3">
+              <div className="grain absolute inset-0 opacity-20" />
+              <div className="relative">
+                <div className="flex items-center gap-1 text-saffron">
                   {[...Array(5)].map((_, j) => (
-                    <Star key={j} className="h-4 w-4 fill-current" />
+                    <Star key={j} className="h-5 w-5 fill-current" />
                   ))}
                 </div>
-                <blockquote className="mt-5 flex-1 font-display text-lg leading-snug text-foreground">
-                  "{r.body}"
+                <blockquote className="mt-6 font-display text-2xl leading-snug md:text-3xl">
+                  "{reviews[0].body}"
                 </blockquote>
-                <figcaption className="mt-6 flex items-center gap-3 border-t border-border/60 pt-5">
-                  <div className="grid h-10 w-10 place-items-center rounded-full bg-saffron/25 font-display text-sm font-semibold text-ink">
-                    {r.name[0]}
+              </div>
+              <figcaption className="relative mt-10 flex items-center gap-3 border-t border-cream/15 pt-6">
+                <div className="grid h-11 w-11 place-items-center rounded-full bg-saffron font-display text-sm font-semibold text-ink">
+                  {reviews[0].name[0]}
+                </div>
+                <div className="min-w-0">
+                  <div className="truncate font-medium">{reviews[0].name}</div>
+                  <div className="truncate text-xs text-cream/60">{reviews[0].role}</div>
+                </div>
+              </figcaption>
+            </figure>
+          </Reveal>
+
+          <div className="flex flex-col gap-6 lg:col-span-2">
+            {reviews.slice(1).map((r, i) => (
+              <Reveal key={r.name} delay={0.1 + i * 0.08}>
+                <figure className="card-lift flex h-full flex-col rounded-3xl border border-border bg-card p-7 shadow-soft">
+                  <div className="flex items-center gap-1 text-saffron-deep">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} className="h-3.5 w-3.5 fill-current" />
+                    ))}
                   </div>
-                  <div className="min-w-0">
-                    <div className="truncate font-medium">{r.name}</div>
-                    <div className="truncate text-xs text-muted-foreground">{r.role}</div>
-                  </div>
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
+                  <blockquote className="mt-4 flex-1 text-base leading-snug text-foreground">
+                    "{r.body}"
+                  </blockquote>
+                  <figcaption className="mt-5 flex items-center gap-3 border-t border-border/60 pt-4">
+                    <div className="grid h-9 w-9 place-items-center rounded-full bg-saffron/25 font-display text-xs font-semibold text-ink">
+                      {r.name[0]}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="truncate text-sm font-medium">{r.name}</div>
+                      <div className="truncate text-xs text-muted-foreground">{r.role}</div>
+                    </div>
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -1181,6 +1271,42 @@ function Newsletter() {
   );
 }
 
+/* --------------------------- Sticky Mobile CTA --------------------------- */
+
+function MobileCta() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const onScroll = () => {
+      const nearBottom =
+        window.innerHeight + window.scrollY > document.body.offsetHeight - 480;
+      setVisible(window.scrollY > 640 && !nearBottom);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return (
+    <div
+      style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
+      className={`fixed inset-x-0 bottom-0 z-40 flex items-center gap-2 border-t border-border bg-cream/95 px-4 pt-3 shadow-lift backdrop-blur transition-transform duration-300 md:hidden ${
+        visible ? "translate-y-0" : "translate-y-full"
+      }`}
+    >
+      <a href="tel:+61281234567" className="btn-ghost flex-1 !px-4 !py-3 text-sm">
+        <Phone className="h-4 w-4" /> Call
+      </a>
+      <a
+        href="https://maps.google.com/?q=Kogarah+NSW"
+        target="_blank"
+        rel="noreferrer"
+        className="btn-saffron flex-[1.4] !px-4 !py-3 text-sm"
+      >
+        Get Directions <ArrowRight className="h-4 w-4" />
+      </a>
+    </div>
+  );
+}
+
 /* -------------------------------- Footer ------------------------------- */
 
 function Footer() {
@@ -1274,6 +1400,7 @@ function Home() {
       <Visit />
       <Newsletter />
       <Footer />
+      <MobileCta />
     </main>
   );
 }
