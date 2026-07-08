@@ -1,0 +1,1 @@
+- [Lovable TanStack Start sandbox host binding](lovable-tanstack-sandbox-ipv6.md) — sandbox can't bind IPv6 `::`; override vite server host/port in the project's `vite.config.ts`.

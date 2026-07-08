@@ -42,7 +42,18 @@ import seafoodImg from "@/assets/seafood.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { property: "og:image", content: "https://id-preview--b9cb7c82-6c46-44ac-99c9-2e1b54a4afed.lovable.app/og.jpg" },
+      {
+        property: "og:image",
+        content: "https://id-preview--b9cb7c82-6c46-44ac-99c9-2e1b54a4afed.lovable.app/og.jpg",
+      },
+      {
+        name: "description",
+        content:
+          "Rice Spice Dice is Kogarah's neighbourhood destination for fresh food and authentic international flavours — premium chicken cut fresh daily, seasonal produce, and Asian, Indian and Middle Eastern groceries you won't find at Woolworths or Coles.",
+      },
+      {
+        title: "Rice Spice Dice — Fresh Food & International Grocery in Kogarah",
+      },
     ],
   }),
   component: Home,
@@ -50,7 +61,15 @@ export const Route = createFileRoute("/")({
 
 /* ----------------------------- Small helpers ----------------------------- */
 
-function Reveal({ children, delay = 0, y = 24 }: { children: ReactNode; delay?: number; y?: number }) {
+function Reveal({
+  children,
+  delay = 0,
+  y = 24,
+}: {
+  children: ReactNode;
+  delay?: number;
+  y?: number;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   return (
@@ -87,14 +106,16 @@ function Nav() {
             <Sparkles className="h-4 w-4" />
           </span>
           <span className="font-display text-lg font-semibold tracking-tight">
-            Rice<span className="text-saffron-deep">·</span>Spice<span className="text-saffron-deep">·</span>Dice
+            Rice<span className="text-saffron-deep">·</span>Spice
+            <span className="text-saffron-deep">·</span>Dice
           </span>
         </a>
         <nav className="hidden items-center gap-8 md:flex">
           {[
-            ["Categories", "#categories"],
-            ["Chicken", "#chicken"],
             ["Today", "#today"],
+            ["Chicken", "#chicken"],
+            ["Categories", "#categories"],
+            ["World Flavours", "#world"],
             ["Recipes", "#recipes"],
             ["Store", "#store"],
             ["Visit", "#visit"],
@@ -126,7 +147,11 @@ function Hero() {
   const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section id="top" ref={ref} className="relative h-[100svh] min-h-[680px] w-full overflow-hidden">
+    <section
+      id="top"
+      ref={ref}
+      className="relative h-[100svh] min-h-[680px] w-full overflow-hidden"
+    >
       <motion.div style={{ y, scale }} className="absolute inset-0">
         <img
           src={heroImg}
@@ -139,7 +164,10 @@ function Hero() {
         <div className="absolute inset-0 bg-gradient-to-r from-ink/40 via-transparent to-transparent" />
       </motion.div>
 
-      <motion.div style={{ opacity: fade }} className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-20 pt-32 lg:px-10 lg:pb-28">
+      <motion.div
+        style={{ opacity: fade }}
+        className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-20 pt-32 lg:px-10 lg:pb-28"
+      >
         <div className="max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -148,7 +176,7 @@ function Hero() {
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-cream/25 bg-cream/10 px-4 py-1.5 text-xs uppercase tracking-[0.22em] text-cream backdrop-blur"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-saffron" />
-            Kogarah · NSW · Est. Family Grocery
+            Kogarah's Neighbourhood Grocery Destination
           </motion.div>
 
           <h1 className="display-xl text-cream">
@@ -185,9 +213,10 @@ function Hero() {
             transition={{ duration: 0.9, delay: 0.6 }}
             className="mt-8 max-w-xl text-lg leading-relaxed text-cream/85"
           >
-            From farm-fresh produce and premium chicken to authentic international
-            groceries — discover everything your family needs, gathered under one
-            warm, welcoming roof.
+            Chicken cut fresh this morning. Vegetables picked this week. Spices, rice and
+            ingredients from India, Sri Lanka, Thailand and the Middle East that the big
+            supermarkets simply don't stock. This is your neighbourhood destination for fresh food
+            and authentic flavours.
           </motion.p>
 
           <motion.div
@@ -249,12 +278,12 @@ function Hero() {
 
 function FeatureStrip() {
   const items = [
-    { icon: Sun, label: "Fresh Every Day" },
-    { icon: ShieldCheck, label: "Quality Guaranteed" },
-    { icon: Globe2, label: "International Selection" },
-    { icon: MapPin, label: "Convenient Location" },
+    { icon: Sun, label: "Today's Fresh Picks" },
+    { icon: Clock, label: "Morning Delivery" },
+    { icon: Drumstick, label: "Prepared Fresh Daily" },
+    { icon: ShieldCheck, label: "Quality Checked" },
+    { icon: Globe2, label: "Hard-to-Find Imports" },
     { icon: Users, label: "Family Friendly" },
-    { icon: Sparkles, label: "Excellent Service" },
   ];
   return (
     <section className="relative overflow-hidden border-y border-border/60 bg-cream py-6">
@@ -307,7 +336,13 @@ function SectionHead({
 /* --------------------------- Shop by Category -------------------------- */
 
 const categories = [
-  { name: "Fresh Produce", tag: "Farm Fresh", img: produceImg, span: "md:col-span-2 md:row-span-2", h: "h-[520px] md:h-full" },
+  {
+    name: "Fresh Produce",
+    tag: "Farm Fresh",
+    img: produceImg,
+    span: "md:col-span-2 md:row-span-2",
+    h: "h-[520px] md:h-full",
+  },
   { name: "Premium Chicken", tag: "Cut Daily", img: chickenImg, span: "", h: "h-[260px]" },
   { name: "Spices", tag: "World Flavours", img: spicesImg, span: "", h: "h-[260px]" },
   { name: "Rice", tag: "Global Varieties", img: riceImg, span: "", h: "h-[260px]" },
@@ -336,11 +371,10 @@ function Categories() {
             eyebrow="Shop by Category"
             title={
               <>
-                Every aisle,{" "}
-                <span className="italic text-saffron-deep">thoughtfully</span> curated.
+                Every aisle, <span className="italic text-saffron-deep">thoughtfully</span> curated.
               </>
             }
-            intro="Wander through fresh produce, premium meats, and pantry staples sourced from every corner of the world."
+            intro="Wander through fresh produce, premium meats, and pantry staples sourced from every corner of the world — including the Asian, Indian and Middle Eastern ingredients you'd struggle to find at Woolworths or Coles."
           />
           <Reveal delay={0.15}>
             <a href="#visit" className="btn-ghost">
@@ -421,19 +455,38 @@ function ChickenExperience() {
           </Reveal>
           <Reveal delay={0.05}>
             <h2 className="display-lg">
-              Premium chicken,{" "}
-              <span className="italic text-saffron">cut fresh</span> every morning.
+              Premium chicken, <span className="italic text-saffron">cut fresh</span> every morning.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-6 max-w-lg text-lg text-cream/75">
-              Sourced from trusted Australian farms and prepared in-store by our team. Whether
-              you're roasting a whole bird or firing the grill with marinated thighs — you'll
-              taste the difference from the first bite.
+              Sourced from trusted Australian farms and cut in-store by our own team — not shipped
+              pre-packed from a warehouse. Whether you're roasting a whole bird or firing the grill
+              with marinated thighs, one look tells you this is fresher than anything on a
+              supermarket shelf.
             </p>
           </Reveal>
 
-          <div className="mt-12 divide-y divide-cream/10 border-y border-cream/10">
+          <Reveal delay={0.12}>
+            <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {[
+                { icon: Sun, label: "Cut Fresh Daily" },
+                { icon: ShieldCheck, label: "Clean Handling" },
+                { icon: MapPin, label: "Reliable Sourcing" },
+                { icon: Users, label: "Family Portions" },
+              ].map(({ icon: Icon, label }) => (
+                <div
+                  key={label}
+                  className="flex items-center gap-2 rounded-2xl border border-cream/15 bg-cream/5 px-3.5 py-3 text-cream/85"
+                >
+                  <Icon className="h-4 w-4 shrink-0 text-saffron" />
+                  <span className="text-xs font-medium leading-tight">{label}</span>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+
+          <div className="mt-8 divide-y divide-cream/10 border-y border-cream/10">
             {cuts.map((c, i) => (
               <Reveal key={c.name} delay={i * 0.05}>
                 <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 py-5">
@@ -558,6 +611,73 @@ function TodaysArrivals() {
   );
 }
 
+/* -------------------------- International Flavours ---------------------- */
+
+const countries = [
+  { name: "India", note: "Basmati, ghee, masalas & pickles", img: riceImg },
+  { name: "Sri Lanka", note: "Curry powders & coconut staples", img: spicesImg },
+  { name: "Thailand", note: "Jasmine rice, fish sauce & chillies", img: recipeThai },
+  { name: "Middle East", note: "Tahini, dates & flatbreads", img: bakeryImg },
+];
+
+function InternationalFlavours() {
+  return (
+    <section id="world" className="relative overflow-hidden bg-forest py-28 text-cream lg:py-36">
+      <div className="grain absolute inset-0" />
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+          <div className="max-w-3xl">
+            <Reveal>
+              <div className="eyebrow mb-4 flex items-center gap-3 text-cream/70">
+                <span className="h-px w-8 bg-cream/40" />
+                International Flavours
+              </div>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h2 className="display-lg text-cream">
+                Ingredients you can't find at{" "}
+                <span className="italic text-saffron">Woolworths or Coles</span>.
+              </h2>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mt-6 text-lg leading-relaxed text-cream/75">
+                A shelf that tastes like home — wherever home is. We stock authentic Asian, Indian
+                and Middle Eastern groceries sourced directly, so you're not settling for the one
+                token spice jar at the big supermarket.
+              </p>
+            </Reveal>
+          </div>
+          <Reveal delay={0.15}>
+            <a href="#visit" className="btn-saffron shrink-0">
+              Discover International Flavours <ArrowRight className="h-4 w-4" />
+            </a>
+          </Reveal>
+        </div>
+
+        <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {countries.map((c, i) => (
+            <Reveal key={c.name} delay={i * 0.06}>
+              <div className="img-zoom card-lift group relative h-72 overflow-hidden rounded-3xl">
+                <img
+                  src={c.img}
+                  alt={`${c.name} groceries`}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/20 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-5">
+                  <h3 className="font-display text-xl font-semibold text-cream">{c.name}</h3>
+                  <p className="mt-1 text-xs leading-snug text-cream/75">{c.note}</p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* --------------------------- Weekly Specials --------------------------- */
 
 function WeeklySpecials() {
@@ -601,7 +721,9 @@ function WeeklySpecials() {
               <div className="relative flex h-full flex-col justify-end p-8">
                 <div className="eyebrow text-cream/80">Spice Aisle</div>
                 <h3 className="mt-2 font-display text-3xl font-semibold">
-                  Buy 2 get 1 free.<br />All whole spices.
+                  Buy 2 get 1 free.
+                  <br />
+                  All whole spices.
                 </h3>
               </div>
             </div>
@@ -658,7 +780,8 @@ function WhyPeopleLove() {
                 eyebrow="Why people keep coming back"
                 title={
                   <>
-                    A neighbourhood store,<br />
+                    A neighbourhood store,
+                    <br />
                     <span className="italic text-saffron-deep">worth the trip</span>.
                   </>
                 }
@@ -732,7 +855,8 @@ function Recipes() {
           eyebrow="Recipe Inspiration"
           title={
             <>
-              Cook the world,<br />
+              Cook the world,
+              <br />
               <span className="italic text-saffron-deep">with what's on our shelves.</span>
             </>
           }
@@ -808,8 +932,8 @@ function Gallery() {
           eyebrow="Inside the Store"
           title={
             <>
-              A space that feels like{" "}
-              <span className="italic text-saffron-deep">somewhere</span> to spend time.
+              A space that feels like <span className="italic text-saffron-deep">somewhere</span> to
+              spend time.
             </>
           }
           intro="Warm wood, generous aisles, and produce arranged like it matters — because it does."
@@ -818,7 +942,9 @@ function Gallery() {
         <div className="mt-14 grid grid-cols-2 gap-3 md:grid-cols-4 md:auto-rows-[200px]">
           {images.map((img, i) => (
             <Reveal key={i} delay={i * 0.04}>
-              <div className={`img-zoom card-lift overflow-hidden rounded-2xl bg-muted ${img.className}`}>
+              <div
+                className={`img-zoom card-lift overflow-hidden rounded-2xl bg-muted ${img.className}`}
+              >
                 <img
                   src={img.src}
                   alt={img.alt}
@@ -840,20 +966,17 @@ const reviews = [
   {
     name: "Priya S.",
     role: "Kogarah local",
-    body:
-      "This is the only grocery I trust for spices. Everything is fresh, well-labelled, and the staff actually know what they're selling.",
+    body: "This is the only grocery I trust for spices. Everything is fresh, well-labelled, and the staff actually know what they're selling.",
   },
   {
     name: "Daniel M.",
     role: "Family shopper",
-    body:
-      "We drive 20 minutes just to shop here. The chicken counter is incredible and the produce is always at its peak.",
+    body: "We drive 20 minutes just to shop here. The chicken counter is incredible and the produce is always at its peak.",
   },
   {
     name: "Amira H.",
     role: "Home cook",
-    body:
-      "It feels like a proper community store. They remember my kids, help me find rare ingredients, and never rush you.",
+    body: "It feels like a proper community store. They remember my kids, help me find rare ingredients, and never rush you.",
   },
 ];
 
@@ -861,14 +984,29 @@ function Testimonials() {
   return (
     <section className="relative py-28 lg:py-36">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <SectionHead
-          eyebrow="Customer stories"
-          title={
-            <>
-              Loved by the <span className="italic text-saffron-deep">neighbourhood</span>.
-            </>
-          }
-        />
+        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+          <SectionHead
+            eyebrow="Customer stories"
+            title={
+              <>
+                Loved by the <span className="italic text-saffron-deep">neighbourhood</span>.
+              </>
+            }
+          />
+          <Reveal delay={0.1}>
+            <div className="flex items-center gap-3 rounded-2xl border border-border bg-card px-5 py-4 shadow-soft">
+              <div className="flex items-center gap-0.5 text-saffron-deep">
+                {[...Array(5)].map((_, j) => (
+                  <Star key={j} className="h-4 w-4 fill-current" />
+                ))}
+              </div>
+              <div className="text-sm">
+                <span className="font-display text-lg font-semibold">4.9</span>
+                <span className="ml-1.5 text-muted-foreground">· 300+ Google reviews</span>
+              </div>
+            </div>
+          </Reveal>
+        </div>
         <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
           {reviews.map((r, i) => (
             <Reveal key={r.name} delay={i * 0.08}>
@@ -913,7 +1051,7 @@ function Visit() {
                 Come <span className="italic text-saffron-deep">say hello</span>.
               </>
             }
-            intro="Free parking. Accessible entry. And a friendly hello every time you walk in."
+            intro="Free parking. Accessible entry. And a friendly hello every time you walk in. This weekend's fresh chicken and produce won't wait — come see it for yourself."
           />
 
           <div className="mt-10 space-y-6">
@@ -1013,8 +1151,7 @@ function Newsletter() {
           <div>
             <div className="eyebrow text-cream/60">The Weekly</div>
             <h2 className="mt-3 display-lg text-cream">
-              Get weekly specials{" "}
-              <span className="italic text-saffron">before everyone else.</span>
+              Get weekly specials <span className="italic text-saffron">before everyone else.</span>
             </h2>
           </div>
         </Reveal>
@@ -1056,22 +1193,36 @@ function Footer() {
               <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-cream">
                 <Sparkles className="h-4 w-4" />
               </span>
-              <span className="font-display text-lg font-semibold">
-                Rice·Spice·Dice
-              </span>
+              <span className="font-display text-lg font-semibold">Rice·Spice·Dice</span>
             </div>
             <p className="mt-5 max-w-sm text-sm text-muted-foreground">
-              A family-run international grocery in Kogarah — bringing warmth, freshness,
-              and the flavours of home to Sydney's south.
+              A family-run international grocery in Kogarah — bringing warmth, freshness, and the
+              flavours of home to Sydney's south.
             </p>
           </div>
           <div>
             <div className="eyebrow mb-4">Store</div>
             <ul className="space-y-2.5 text-sm text-foreground/80">
-              <li><a href="#categories" className="hover:text-saffron-deep">Categories</a></li>
-              <li><a href="#chicken" className="hover:text-saffron-deep">Chicken Counter</a></li>
-              <li><a href="#today" className="hover:text-saffron-deep">Today's Arrivals</a></li>
-              <li><a href="#recipes" className="hover:text-saffron-deep">Recipes</a></li>
+              <li>
+                <a href="#categories" className="hover:text-saffron-deep">
+                  Categories
+                </a>
+              </li>
+              <li>
+                <a href="#chicken" className="hover:text-saffron-deep">
+                  Chicken Counter
+                </a>
+              </li>
+              <li>
+                <a href="#today" className="hover:text-saffron-deep">
+                  Today's Arrivals
+                </a>
+              </li>
+              <li>
+                <a href="#recipes" className="hover:text-saffron-deep">
+                  Recipes
+                </a>
+              </li>
             </ul>
           </div>
           <div>
@@ -1087,9 +1238,15 @@ function Footer() {
         <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-border pt-8 text-xs text-muted-foreground md:flex-row md:items-center">
           <div>© {new Date().getFullYear()} Rice Spice Dice · Kogarah, NSW</div>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-foreground">Privacy</a>
-            <a href="#" className="hover:text-foreground">Terms</a>
-            <a href="#" className="hover:text-foreground">Accessibility</a>
+            <a href="#" className="hover:text-foreground">
+              Privacy
+            </a>
+            <a href="#" className="hover:text-foreground">
+              Terms
+            </a>
+            <a href="#" className="hover:text-foreground">
+              Accessibility
+            </a>
           </div>
         </div>
       </div>
@@ -1105,12 +1262,13 @@ function Home() {
       <Nav />
       <Hero />
       <FeatureStrip />
-      <Categories />
-      <ChickenExperience />
       <TodaysArrivals />
+      <ChickenExperience />
+      <Categories />
+      <InternationalFlavours />
       <WeeklySpecials />
-      <WhyPeopleLove />
       <Recipes />
+      <WhyPeopleLove />
       <Gallery />
       <Testimonials />
       <Visit />
