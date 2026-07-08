@@ -141,7 +141,7 @@
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: -0.035em;
-  line-height: 0.95;
+  line-height: 1;
   font-size: clamp(2.75rem, 7vw, 6.5rem);
 }
 
@@ -149,7 +149,7 @@
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: -0.03em;
-  line-height: 1;
+  line-height: 1.05;
   font-size: clamp(2.25rem, 5vw, 4.25rem);
 }
 
@@ -193,6 +193,10 @@
     transform: translateY(-2px);
     box-shadow: var(--shadow-lift);
   }
+  &:focus-visible {
+    outline: 2px solid var(--saffron);
+    outline-offset: 2px;
+  }
 }
 
 @utility btn-saffron {
@@ -211,6 +215,10 @@
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 20px 50px -15px color-mix(in oklab, var(--saffron) 70%, transparent);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
   }
 }
 
@@ -231,6 +239,10 @@
     background: var(--ink);
     color: var(--cream);
     transform: translateY(-2px);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--saffron);
+    outline-offset: 2px;
   }
 }
 
@@ -271,7 +283,7 @@
 
 @keyframes marquee {
   from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  to   { transform: translateX(-33.33%); }
 }
 
 @keyframes fade-up {
@@ -290,4 +302,17 @@
 
 @utility floaty {
   animation: float-y 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee,
+  .floaty {
+    animation: none !important;
+  }
+  .card-lift:hover {
+    transform: none !important;
+  }
+  .img-zoom:hover img {
+    transform: none !important;
+  }
 }

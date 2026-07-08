@@ -29,9 +29,11 @@ import {
   Heart,
   CalendarDays,
   ShoppingBag,
+  Menu,
+  X,
 } from "lucide-react";
 
-import heroImg from "@/assets/hero.jpg";
+import heroImg from "@/assets/hero.png";
 import chickenImg from "@/assets/chicken.jpg";
 import spicesImg from "@/assets/spices.jpg";
 import produceImg from "@/assets/produce.jpg";
@@ -55,7 +57,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Rice Spice Dice is Kogarah's neighbourhood destination for fresh food and authentic international flavours — premium chicken cut fresh daily, seasonal produce, and Asian, Indian and Middle Eastern groceries you won't find at Woolworths or Coles.",
+          "Rice Spice Dice is Kogarah's neighbourhood destination for fresh food and authentic international flavours — premium chicken cut fresh daily, seasonal produce, and Nepali, Indian and Middle Eastern groceries you won't find at Woolworths or Coles.",
       },
       {
         title: "Rice Spice Dice — Fresh Food & International Grocery in Kogarah",
@@ -83,7 +85,7 @@ function Reveal({
       ref={ref}
       initial={{ opacity: 0, y }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.9, delay, ease: [0.2, 0.8, 0.2, 1] }}
+      transition={{ duration: 0.6, delay, ease: [0.2, 0.8, 0.2, 1] }}
     >
       {children}
     </motion.div>
@@ -141,54 +143,135 @@ function OrganicBlob({ className = "" }: { className?: string }) {
 
 /* --------------------------------- Nav ---------------------------------- */
 
+const navLinks = [
+  ["Today", "#today"],
+  ["Chicken", "#chicken"],
+  ["Categories", "#categories"],
+  ["Groceries", "#world"],
+  ["Recipes", "#recipes"],
+  ["Store", "#store"],
+  ["Visit", "#visit"],
+] as const;
+
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled ? "glass-nav py-3" : "py-5"
-      }`}
-    >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-10">
-        <a href="#top" className="flex items-center gap-2.5">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-cream">
-            <Sparkles className="h-4 w-4" />
-          </span>
-          <span className="font-display text-lg font-semibold tracking-tight">
-            Rice<span className="text-saffron-deep">·</span>Spice
-            <span className="text-saffron-deep">·</span>Dice
-          </span>
-        </a>
-        <nav className="hidden items-center gap-8 md:flex">
-          {[
-            ["Today", "#today"],
-            ["Chicken", "#chicken"],
-            ["Categories", "#categories"],
-            ["World Flavours", "#world"],
-            ["Recipes", "#recipes"],
-            ["Store", "#store"],
-            ["Visit", "#visit"],
-          ].map(([label, href]) => (
-            <a
-              key={href}
-              href={href}
-              className="text-sm text-foreground/75 transition-colors hover:text-foreground"
-            >
-              {label}
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+          scrolled ? "glass-nav py-3 text-foreground" : "py-5 text-cream"
+        }`}
+      >
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-10">
+          <a href="#top" className="flex items-center gap-2.5">
+            <span className={`grid h-9 w-9 place-items-center rounded-full transition-colors ${scrolled ? 'bg-ink text-cream' : 'bg-cream text-ink'}`}>
+              <Sparkles className="h-4 w-4" />
+            </span>
+            <span className="font-display text-lg font-semibold tracking-tight">
+              Rice<span className="text-saffron-deep">·</span>Spice
+              <span className="text-saffron-deep">·</span>Dice
+            </span>
+          </a>
+          <nav className="hidden items-center gap-8 md:flex" aria-label="Main navigation">
+            {navLinks.map(([label, href]) => (
+              <a
+                key={href}
+                href={href}
+                className={`text-sm transition-colors ${
+                  scrolled
+                    ? "text-foreground/75 hover:text-foreground"
+                    : "text-cream/80 hover:text-cream"
+                }`}
+              >
+                {label}
+              </a>
+            ))}
+          </nav>
+          <div className="flex items-center gap-3">
+            <a href="#visit" className="btn-saffron hidden md:inline-flex text-sm">
+              Visit Store <ArrowRight className="h-4 w-4" />
             </a>
-          ))}
+            <button
+              onClick={() => setMobileOpen(true)}
+              className="grid h-10 w-10 place-items-center rounded-full md:hidden"
+              aria-label="Open navigation menu"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile navigation drawer */}
+      <div
+        className={`fixed inset-0 z-[60] transition-opacity duration-300 md:hidden ${
+          mobileOpen ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
+      >
+        <div
+          className="absolute inset-0 bg-ink/50 backdrop-blur-sm"
+          onClick={() => setMobileOpen(false)}
+        />
+        <nav
+          className={`absolute right-0 top-0 flex h-full w-72 flex-col bg-cream shadow-lift transition-transform duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
+            mobileOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+          aria-label="Mobile navigation"
+        >
+          <div className="flex items-center justify-between px-6 py-5">
+            <span className="font-display text-lg font-semibold tracking-tight text-foreground">
+              Rice<span className="text-saffron-deep">·</span>Spice
+              <span className="text-saffron-deep">·</span>Dice
+            </span>
+            <button
+              onClick={() => setMobileOpen(false)}
+              className="grid h-9 w-9 place-items-center rounded-full bg-secondary text-foreground"
+              aria-label="Close navigation menu"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+          <div className="flex-1 overflow-y-auto px-6 py-2">
+            {navLinks.map(([label, href]) => (
+              <a
+                key={href}
+                href={href}
+                onClick={() => setMobileOpen(false)}
+                className="block border-b border-border/60 py-3.5 text-base font-medium text-foreground/80 transition-colors hover:text-saffron-deep"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+          <div className="border-t border-border p-6">
+            <a
+              href="#visit"
+              onClick={() => setMobileOpen(false)}
+              className="btn-saffron w-full justify-center text-sm"
+            >
+              Visit Store <ArrowRight className="h-4 w-4" />
+            </a>
+          </div>
         </nav>
-        <a href="#visit" className="btn-saffron hidden md:inline-flex text-sm">
-          Visit Store <ArrowRight className="h-4 w-4" />
-        </a>
       </div>
-    </header>
+    </>
   );
 }
 
@@ -205,7 +288,7 @@ function Hero() {
     <section
       id="top"
       ref={ref}
-      className="relative h-[100svh] min-h-[680px] w-full overflow-hidden"
+      className="relative flex min-h-[100svh] w-full flex-col overflow-hidden"
     >
       <motion.div style={{ y, scale }} className="absolute inset-0">
         <img
@@ -221,7 +304,7 @@ function Hero() {
 
       <motion.div
         style={{ opacity: fade }}
-        className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-20 pt-32 lg:px-10 lg:pb-28"
+        className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-6 pb-20 pt-32 lg:px-10 lg:pb-28"
       >
         <div className="max-w-4xl">
           <motion.div
@@ -230,15 +313,26 @@ function Hero() {
             transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-cream/25 bg-cream/10 px-4 py-1.5 text-xs uppercase tracking-[0.22em] text-cream backdrop-blur"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-saffron" />
-            Kogarah's Neighbourhood Grocery Destination
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-1.5">
+                <MapPin className="h-3.5 w-3.5 text-saffron" /> Kogarah
+              </div>
+              <div className="hidden h-3 w-px bg-cream/30 sm:block" />
+              <div className="hidden items-center gap-1.5 sm:flex">
+                <Clock className="h-3.5 w-3.5 text-saffron" /> Open until 8:30 PM
+              </div>
+              <div className="hidden h-3 w-px bg-cream/30 sm:block" />
+              <div className="hidden items-center gap-1.5 sm:flex">
+                <Car className="h-3.5 w-3.5 text-saffron" /> Free Parking
+              </div>
+            </div>
           </motion.div>
 
           <h1 className="display-xl text-cream">
             <motion.span
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.1, ease: [0.2, 0.8, 0.2, 1] }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.2, 0.8, 0.2, 1] }}
               className="block"
             >
               Fresh Food.
@@ -246,7 +340,7 @@ function Hero() {
             <motion.span
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.25, ease: [0.2, 0.8, 0.2, 1] }}
+              transition={{ duration: 0.8, delay: 0.25, ease: [0.2, 0.8, 0.2, 1] }}
               className="block"
             >
               Real Quality.
@@ -254,9 +348,8 @@ function Hero() {
             <motion.span
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
               className="block italic text-saffron"
-              style={{ fontFamily: "'Poppins', serif" }}
             >
               Every&nbsp;Day.
             </motion.span>
@@ -265,11 +358,11 @@ function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
             className="mt-8 max-w-xl text-lg leading-relaxed text-cream/85"
           >
             Chicken cut fresh this morning. Vegetables picked this week. Spices, rice and
-            ingredients from India, Sri Lanka, Thailand and the Middle East that the big
+            ingredients from Nepal, India, Sri Lanka, and the Middle East that the big
             supermarkets simply don't stock. This is your neighbourhood destination for fresh food
             and authentic flavours.
           </motion.p>
@@ -277,7 +370,7 @@ function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.75 }}
+            transition={{ duration: 0.6, delay: 0.75 }}
             className="mt-10 flex flex-wrap items-center gap-3"
           >
             <a href="#visit" className="btn-saffron">
@@ -296,7 +389,7 @@ function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.9 }}
+          transition={{ duration: 0.8, delay: 0.9 }}
           className="mt-16 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4"
         >
           {[
@@ -304,15 +397,14 @@ function Hero() {
             { icon: Drumstick, label: "Premium Chicken" },
             { icon: Globe2, label: "International" },
             { icon: Users, label: "Local Team" },
-          ].map(({ icon: Icon, label }, i) => (
-            <motion.div
+          ].map(({ icon: Icon, label }) => (
+            <div
               key={label}
-              className="floaty flex items-center gap-2.5 rounded-2xl border border-cream/20 bg-cream/10 px-4 py-3 text-cream backdrop-blur-xl"
-              style={{ animationDelay: `${i * 0.4}s` }}
+              className="flex items-center gap-2.5 rounded-2xl border border-cream/20 bg-cream/10 px-4 py-3 text-cream backdrop-blur-xl"
             >
               <Icon className="h-4 w-4 text-saffron" />
               <span className="text-xs font-medium tracking-wide">{label}</span>
-            </motion.div>
+            </div>
           ))}
         </motion.div>
       </motion.div>
@@ -334,7 +426,7 @@ function Hero() {
 function FeatureStrip() {
   const items = [
     { icon: Sun, label: "Today's Fresh Picks" },
-    { icon: Clock, label: "Morning Delivery" },
+    { icon: Clock, label: "Open 7 Days" },
     { icon: Drumstick, label: "Prepared Fresh Daily" },
     { icon: ShieldCheck, label: "Quality Checked" },
     { icon: Globe2, label: "Hard-to-Find Imports" },
@@ -381,7 +473,9 @@ function SectionHead({
       </Reveal>
       {intro && (
         <Reveal delay={0.1}>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">{intro}</p>
+          <p className={`mt-6 max-w-[65ch] text-lg leading-relaxed text-muted-foreground ${align === "center" ? "mx-auto" : ""}`}>
+            {intro}
+          </p>
         </Reveal>
       )}
     </div>
@@ -402,8 +496,8 @@ const categories = [
   { name: "Spices", tag: "World Flavours", img: spicesImg, span: "", h: "h-[260px]" },
   { name: "Rice", tag: "Global Varieties", img: riceImg, span: "", h: "h-[260px]" },
   { name: "Fresh Fruit", tag: "Seasonal", img: fruitImg, span: "", h: "h-[260px]" },
-  { name: "Bakery", tag: "Baked In-Store", img: bakeryImg, span: "", h: "h-[260px]" },
-  { name: "Seafood", tag: "On Ice", img: seafoodImg, span: "", h: "h-[260px]" },
+  { name: "Bakery", tag: "Baked In-Store", img: bakeryImg, span: "md:col-span-2", h: "h-[260px]" },
+  { name: "Seafood", tag: "On Ice", img: seafoodImg, span: "md:col-span-2", h: "h-[260px]" },
 ];
 
 const extraCats = [
@@ -414,12 +508,12 @@ const extraCats = [
   { name: "Drinks", icon: Coffee },
   { name: "Vegetables", icon: Leaf },
   { name: "Grains", icon: Wheat },
-  { name: "Seafood", icon: Fish },
+  { name: "Ready Meals", icon: Fish },
 ];
 
 function Categories() {
   return (
-    <section id="categories" className="relative overflow-hidden py-28 lg:py-36">
+    <section id="categories" className="relative overflow-hidden py-16 md:py-24 lg:py-32">
       <OrganicBlob className="-right-16 top-10 h-72 w-72" />
       <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
         <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
@@ -430,7 +524,7 @@ function Categories() {
                 Every aisle, <span className="italic text-saffron-deep">thoughtfully</span> curated.
               </>
             }
-            intro="Wander through fresh produce, premium meats, and pantry staples sourced from every corner of the world — including the Asian, Indian and Middle Eastern ingredients you'd struggle to find at Woolworths or Coles."
+            intro="Wander through fresh produce, premium meats, and pantry staples sourced from every corner of the world — including the Nepali, Indian and Middle Eastern ingredients you'd struggle to find at Woolworths or Coles."
           />
           <Reveal delay={0.15}>
             <a href="#visit" className="btn-ghost">
@@ -506,20 +600,19 @@ function ChickenExperience() {
           <Reveal>
             <div className="eyebrow mb-4 flex items-center gap-3 text-cream/70">
               <span className="h-px w-8 bg-cream/40" />
-              The Chicken Counter
+              Fresh Chicken Prepared Daily
             </div>
           </Reveal>
           <Reveal delay={0.05}>
             <h2 className="display-lg">
-              Premium chicken, <span className="italic text-saffron">cut fresh</span> every morning.
+              100% Halal premium chicken, <span className="italic text-saffron">cut fresh</span> every morning.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-6 max-w-lg text-lg text-cream/75">
               Sourced from trusted Australian farms and cut in-store by our own team — not shipped
-              pre-packed from a warehouse. Whether you're roasting a whole bird or firing the grill
-              with marinated thighs, one look tells you this is fresher than anything on a
-              supermarket shelf.
+              pre-packed from a warehouse. Whether you need a whole bird for roasting or family-sized 
+              packs of marinated thighs, we guarantee freshness and 100% Halal certification on every cut.
             </p>
           </Reveal>
 
@@ -527,9 +620,9 @@ function ChickenExperience() {
             <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[
                 { icon: Sun, label: "Cut Fresh Daily" },
-                { icon: ShieldCheck, label: "Clean Handling" },
-                { icon: MapPin, label: "Reliable Sourcing" },
-                { icon: Users, label: "Family Portions" },
+                { icon: ShieldCheck, label: "100% Halal" },
+                { icon: Users, label: "Family Packs" },
+                { icon: Drumstick, label: "Clean Handling" },
               ].map(({ icon: Icon, label }) => (
                 <div
                   key={label}
@@ -626,17 +719,17 @@ const arrivals = [
 
 function TodaysArrivals() {
   return (
-    <section id="today" className="relative py-28 lg:py-36">
+    <section id="today" className="relative py-16 md:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <SectionHead
-            eyebrow="Today's Fresh Arrivals"
+            eyebrow="Arrived Fresh Today"
             title={
               <>
-                Updated <span className="italic text-saffron-deep">daily</span>.<br />
-                Straight from the crate.
+                Why you should visit <span className="italic text-saffron-deep">today</span>.
               </>
             }
+            intro="Fresh produce, rare imports, and seasonal items that just landed. Grab them before they sell out."
           />
           <Reveal>
             <div className="inline-flex items-center gap-2 rounded-full bg-forest/10 px-4 py-2 text-sm text-forest">
@@ -680,9 +773,9 @@ function TodaysArrivals() {
 /* -------------------------- International Flavours ---------------------- */
 
 const countries = [
+  { name: "Nepal", note: "Authentic staples, teas & local spices", img: recipeThai },
   { name: "India", note: "Basmati, ghee, masalas & pickles", img: riceImg },
   { name: "Sri Lanka", note: "Curry powders & coconut staples", img: spicesImg },
-  { name: "Thailand", note: "Jasmine rice, fish sauce & chillies", img: recipeThai },
   { name: "Middle East", note: "Tahini, dates & flatbreads", img: bakeryImg },
 ];
 
@@ -696,7 +789,7 @@ function InternationalFlavours() {
             <Reveal>
               <div className="eyebrow mb-4 flex items-center gap-3 text-cream/70">
                 <span className="h-px w-8 bg-cream/40" />
-                International Flavours
+                Your Favourite Groceries from Home
               </div>
             </Reveal>
             <Reveal delay={0.05}>
@@ -707,15 +800,15 @@ function InternationalFlavours() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-6 text-lg leading-relaxed text-cream/75">
-                A shelf that tastes like home — wherever home is. We stock authentic Asian, Indian
-                and Middle Eastern groceries sourced directly, so you're not settling for the one
-                token spice jar at the big supermarket.
+                A shelf that tastes like home — wherever home is. We stock authentic Nepali groceries, 
+                Indian spices, and Middle Eastern staples sourced directly, so you're not settling for 
+                the one token spice jar at the big supermarket.
               </p>
             </Reveal>
           </div>
           <Reveal delay={0.15}>
             <a href="#visit" className="btn-saffron shrink-0">
-              Discover International Flavours <ArrowRight className="h-4 w-4" />
+              Find your favourites <ArrowRight className="h-4 w-4" />
             </a>
           </Reveal>
         </div>
@@ -757,18 +850,17 @@ function WeeklySpecials() {
             <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl bg-saffron p-10 text-ink lg:col-span-2 lg:row-span-1">
               <div className="grain absolute inset-0" />
               <div className="relative">
-                <div className="eyebrow text-ink/70">Weekly Specials</div>
+                <div className="eyebrow text-ink/70">Today's Best Value</div>
                 <h3 className="mt-4 display-lg">
                   Save up to <span className="italic">30%</span> on family favourites.
                 </h3>
-                <p className="mt-4 max-w-md text-ink/75">
-                  New deals refreshed every Monday across fresh produce, pantry staples, and the
-                  chicken counter.
+                <p className="mt-4 max-w-[65ch] text-ink/75">
+                  Save on seasonal fresh produce, bulk rice, and family-sized chicken packs available in-store today. We pass our supplier discounts directly to you.
                 </p>
               </div>
               <div className="relative mt-10 flex items-end justify-between">
                 <a href="#visit" className="btn-primary">
-                  See this week's specials <ArrowRight className="h-4 w-4" />
+                  See today's best value <ArrowRight className="h-4 w-4" />
                 </a>
                 <div className="hidden font-display text-8xl font-bold leading-none text-ink/15 md:block">
                   30%
@@ -813,7 +905,7 @@ const stories = [
   {
     icon: Globe2,
     title: "Authentic, from everywhere",
-    body: "Ingredients from India, Sri Lanka, Thailand, Korea, Lebanon, Italy — the flavours you grew up with.",
+    body: "Ingredients from Nepal, India, Sri Lanka, Korea, Lebanon, Italy — the flavours you grew up with.",
   },
   {
     icon: Users,
@@ -839,7 +931,7 @@ const stories = [
 
 function WhyPeopleLove() {
   return (
-    <section className="relative py-28 lg:py-36">
+    <section className="relative py-16 md:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="grid grid-cols-1 gap-16 lg:grid-cols-12">
           <div className="lg:col-span-5">
@@ -907,29 +999,29 @@ const recipes = [
     ingredients: ["Basmati", "Chicken", "Saffron", "Mint", "Fried onion"],
   },
   {
-    title: "Thai Fried Rice",
-    region: "Bangkok, Thailand",
+    title: "Chicken Momo",
+    region: "Kathmandu, Nepal",
     img: recipeThai,
-    time: "25 min",
-    ingredients: ["Jasmine rice", "Egg", "Fish sauce", "Lime", "Chilli"],
+    time: "1 hour",
+    ingredients: ["Chicken mince", "Flour", "Ginger", "Garlic", "Coriander"],
   },
 ];
 
 function Recipes() {
   return (
-    <section id="recipes" className="relative overflow-hidden py-28 lg:py-36">
+    <section id="recipes" className="relative overflow-hidden py-16 md:py-24 lg:py-32">
       <OrganicBlob className="-left-20 bottom-0 h-80 w-80" />
       <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
         <SectionHead
-          eyebrow="Recipe Inspiration"
+          eyebrow="Cook Tonight"
           title={
             <>
-              Cook the world,
+              Complete meals,
               <br />
-              <span className="italic text-saffron-deep">with what's on our shelves.</span>
+              <span className="italic text-saffron-deep">in one shopping basket.</span>
             </>
           }
-          intro="Every ingredient in these recipes is stocked in-store. Come in, and we'll help you find it."
+          intro="Don't know what to cook? Pick a recipe and grab every single ingredient you need from our shelves today. We've got everything from the protein to the exact spice blend."
         />
 
         <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -995,17 +1087,16 @@ function Gallery() {
     { src: seafoodImg, alt: "Seafood", className: "" },
   ];
   return (
-    <section id="store" className="relative bg-secondary/40 py-28 lg:py-36">
+    <section id="store" className="relative bg-secondary/40 py-16 md:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <SectionHead
-          eyebrow="Inside the Store"
+          eyebrow="Explore Our Store Before You Visit"
           title={
             <>
-              A space that feels like <span className="italic text-saffron-deep">somewhere</span> to
-              spend time.
+              Clean, organised, and <span className="italic text-saffron-deep">ready to explore</span>.
             </>
           }
-          intro="Warm wood, generous aisles, and produce arranged like it matters — because it does."
+          intro="Wide aisles, premium presentation, and a welcoming atmosphere. This is a store that respects your time and your standards."
         />
 
         <div className="mt-14 grid grid-cols-2 gap-3 md:grid-cols-4 md:auto-rows-[200px]">
@@ -1051,7 +1142,7 @@ const reviews = [
 
 function Testimonials() {
   return (
-    <section className="relative py-28 lg:py-36">
+    <section className="relative py-16 md:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <SectionHead
@@ -1076,57 +1167,30 @@ function Testimonials() {
             </div>
           </Reveal>
         </div>
-        <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-5">
-          <Reveal>
-            <figure className="card-lift relative flex h-full flex-col justify-between overflow-hidden rounded-3xl bg-ink p-10 text-cream shadow-lift lg:col-span-3">
-              <div className="grain absolute inset-0 opacity-20" />
-              <div className="relative">
-                <div className="flex items-center gap-1 text-saffron">
+        <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
+          {reviews.map((r, i) => (
+            <Reveal key={r.name} delay={i * 0.08}>
+              <figure className="card-lift flex h-full flex-col rounded-3xl border border-border bg-card p-7 shadow-soft">
+                <div className="flex items-center gap-1 text-saffron-deep">
                   {[...Array(5)].map((_, j) => (
-                    <Star key={j} className="h-5 w-5 fill-current" />
+                    <Star key={j} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
-                <blockquote className="mt-6 font-display text-2xl leading-snug md:text-3xl">
-                  "{reviews[0].body}"
+                <blockquote className="mt-4 flex-1 font-display text-lg leading-snug text-foreground">
+                  "{r.body}"
                 </blockquote>
-              </div>
-              <figcaption className="relative mt-10 flex items-center gap-3 border-t border-cream/15 pt-6">
-                <div className="grid h-11 w-11 place-items-center rounded-full bg-saffron font-display text-sm font-semibold text-ink">
-                  {reviews[0].name[0]}
-                </div>
-                <div className="min-w-0">
-                  <div className="truncate font-medium">{reviews[0].name}</div>
-                  <div className="truncate text-xs text-cream/60">{reviews[0].role}</div>
-                </div>
-              </figcaption>
-            </figure>
-          </Reveal>
-
-          <div className="flex flex-col gap-6 lg:col-span-2">
-            {reviews.slice(1).map((r, i) => (
-              <Reveal key={r.name} delay={0.1 + i * 0.08}>
-                <figure className="card-lift flex h-full flex-col rounded-3xl border border-border bg-card p-7 shadow-soft">
-                  <div className="flex items-center gap-1 text-saffron-deep">
-                    {[...Array(5)].map((_, j) => (
-                      <Star key={j} className="h-3.5 w-3.5 fill-current" />
-                    ))}
+                <figcaption className="mt-6 flex items-center gap-3 border-t border-border/60 pt-5">
+                  <div className="grid h-10 w-10 place-items-center rounded-full bg-saffron/20 font-display text-sm font-semibold text-saffron-deep">
+                    {r.name[0]}
                   </div>
-                  <blockquote className="mt-4 flex-1 text-base leading-snug text-foreground">
-                    "{r.body}"
-                  </blockquote>
-                  <figcaption className="mt-5 flex items-center gap-3 border-t border-border/60 pt-4">
-                    <div className="grid h-9 w-9 place-items-center rounded-full bg-saffron/25 font-display text-xs font-semibold text-ink">
-                      {r.name[0]}
-                    </div>
-                    <div className="min-w-0">
-                      <div className="truncate text-sm font-medium">{r.name}</div>
-                      <div className="truncate text-xs text-muted-foreground">{r.role}</div>
-                    </div>
-                  </figcaption>
-                </figure>
-              </Reveal>
-            ))}
-          </div>
+                  <div className="min-w-0">
+                    <div className="truncate text-sm font-medium">{r.name}</div>
+                    <div className="truncate text-xs text-muted-foreground">{r.role}</div>
+                  </div>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
@@ -1137,17 +1201,17 @@ function Testimonials() {
 
 function Visit() {
   return (
-    <section id="visit" className="relative overflow-hidden bg-cream py-28 lg:py-36">
+    <section id="visit" className="relative overflow-hidden bg-cream py-16 md:py-24 lg:py-32">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-14 px-6 lg:grid-cols-12 lg:gap-16 lg:px-10">
         <div className="lg:col-span-5">
           <SectionHead
-            eyebrow="Visit Us"
+            eyebrow="Plan Your Visit"
             title={
               <>
                 Come <span className="italic text-saffron-deep">say hello</span>.
               </>
             }
-            intro="Free parking. Accessible entry. And a friendly hello every time you walk in. This weekend's fresh chicken and produce won't wait — come see it for yourself."
+            intro="We've made visiting easy. Free parking right out front, accessible entry, and we're open late. Have a question about bulk orders or special events? Check below or give us a call."
           />
 
           <div className="mt-10 space-y-6">
@@ -1186,6 +1250,17 @@ function Visit() {
                 <div className="eyebrow">Parking</div>
                 <p className="mt-1 text-sm text-foreground/80">
                   Free customer parking directly out front on Railway Parade.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ink text-cream">
+                <Users className="h-4 w-4" />
+              </span>
+              <div>
+                <div className="eyebrow">Bulk & Special Orders</div>
+                <p className="mt-1 text-sm text-foreground/80">
+                  Need bulk rice, large meat orders, or specific festival items? Call us 2 days ahead and we'll have it ready for pickup.
                 </p>
               </div>
             </div>
@@ -1380,7 +1455,7 @@ function Newsletter() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
-              className="flex-1 rounded-full border border-cream/20 bg-cream/5 px-6 py-4 text-cream placeholder:text-cream/40 outline-none transition-all focus:border-saffron focus:bg-cream/10"
+              className="flex-1 rounded-full border border-cream/20 bg-cream/5 px-6 py-4 text-cream placeholder:text-cream/40 outline-none transition-all focus-visible:ring-2 focus-visible:ring-saffron focus-visible:bg-cream/10"
             />
             <button type="submit" className="btn-saffron">
               {done ? "See you Monday " : "Subscribe "} <ArrowRight className="h-4 w-4" />
@@ -1413,14 +1488,14 @@ function MobileCta() {
         visible ? "translate-y-0" : "translate-y-full"
       }`}
     >
-      <a href="tel:+61281234567" className="btn-ghost flex-1 !px-4 !py-3 text-sm">
+      <a href="tel:+61281234567" className="btn-ghost flex-1 !px-4 !py-3 min-h-[44px] text-sm">
         <Phone className="h-4 w-4" /> Call
       </a>
       <a
         href="https://maps.google.com/?q=Kogarah+NSW"
         target="_blank"
         rel="noreferrer"
-        className="btn-saffron flex-[1.4] !px-4 !py-3 text-sm"
+        className="btn-saffron flex-[1.4] !px-4 !py-3 min-h-[44px] text-sm"
       >
         Get Directions <ArrowRight className="h-4 w-4" />
       </a>
@@ -1482,8 +1557,8 @@ function Footer() {
             <ul className="space-y-2.5 text-sm text-foreground/80">
               <li>Railway Parade</li>
               <li>Kogarah NSW 2217</li>
-              <li>(02) 8123 4567</li>
-              <li>hello@ricespicedice.com.au</li>
+              <li><a href="tel:+61281234567" className="transition-colors hover:text-saffron-deep">(02) 8123 4567</a></li>
+              <li><a href="mailto:hello@ricespicedice.com.au" className="transition-colors hover:text-saffron-deep">hello@ricespicedice.com.au</a></li>
             </ul>
           </div>
         </div>
@@ -1510,7 +1585,13 @@ function Footer() {
 
 function Home() {
   return (
-    <main className="bg-background text-foreground">
+    <main id="main-content" className="bg-background text-foreground">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-saffron focus:px-5 focus:py-2.5 focus:font-medium focus:text-ink focus:shadow-lift"
+      >
+        Skip to content
+      </a>
       <Nav />
       <Hero />
       <FeatureStrip />
