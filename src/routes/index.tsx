@@ -23,6 +23,12 @@ import {
   Cookie,
   IceCream,
   Snowflake,
+  Car,
+  Gift,
+  Bell,
+  Heart,
+  CalendarDays,
+  ShoppingBag,
 } from "lucide-react";
 
 import heroImg from "@/assets/hero.jpg";
@@ -1166,7 +1172,21 @@ function Visit() {
                   <li>Mon – Fri &nbsp;·&nbsp; 8:00 am – 8:30 pm</li>
                   <li>Saturday &nbsp;·&nbsp; 8:00 am – 9:00 pm</li>
                   <li>Sunday &nbsp;·&nbsp; 9:00 am – 7:00 pm</li>
+                  <li className="text-foreground/60">
+                    Public holidays &nbsp;·&nbsp; 9:00 am – 6:00 pm (closed Christmas Day)
+                  </li>
                 </ul>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ink text-cream">
+                <Car className="h-4 w-4" />
+              </span>
+              <div>
+                <div className="eyebrow">Parking</div>
+                <p className="mt-1 text-sm text-foreground/80">
+                  Free customer parking directly out front on Railway Parade.
+                </p>
               </div>
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -1220,9 +1240,110 @@ function Visit() {
                 <div className="mt-1 font-display text-lg font-semibold">Rice Spice Dice</div>
                 <div className="text-xs text-muted-foreground">Kogarah, NSW · 2.4km away</div>
               </div>
+              <div className="absolute bottom-6 left-6 right-6 flex items-center gap-3 rounded-2xl bg-ink/90 p-4 text-cream backdrop-blur shadow-soft">
+                <Bell className="h-4 w-4 shrink-0 text-saffron" />
+                <p className="text-sm leading-snug">
+                  <span className="font-medium">This week's notice:</span> fresh king prawns &amp;
+                  mangoes just landed — ask in-store.
+                </p>
+              </div>
             </div>
           </Reveal>
         </div>
+      </div>
+
+      <OrganicSeam fromClass="text-ink" />
+    </section>
+  );
+}
+
+/* ---------------------------- Future Vision ----------------------------- */
+
+const futureFeatures = [
+  {
+    icon: ShoppingBag,
+    title: "Click & Collect",
+    body: "Order online, skip the queue, pick up fresh at the counter.",
+  },
+  {
+    icon: Drumstick,
+    title: "Reserve Fresh Chicken",
+    body: "Call ahead or book online for your exact cut, ready when you arrive.",
+  },
+  {
+    icon: Heart,
+    title: "Loyalty Rewards",
+    body: "Earn points on every visit and unlock member-only pricing.",
+  },
+  {
+    icon: Gift,
+    title: "Gift Cards",
+    body: "Share the store you love with family, friends and staff.",
+  },
+  {
+    icon: CalendarDays,
+    title: "Community Events",
+    body: "Tastings, cooking demos and festival celebrations in-store.",
+  },
+  {
+    icon: Bell,
+    title: "Store News & Promotions",
+    body: "Real-time updates on arrivals, specials and seasonal campaigns.",
+  },
+];
+
+function FutureVision() {
+  return (
+    <section id="future" className="relative overflow-hidden bg-ink py-28 text-cream lg:py-36">
+      <div className="grain absolute inset-0 opacity-20" />
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="max-w-2xl">
+          <Reveal>
+            <div className="eyebrow mb-4 flex items-center gap-3 text-cream/70">
+              <span className="h-px w-8 bg-cream/40" />
+              What's Next
+            </div>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <h2 className="display-lg text-cream">
+              This is just <span className="italic text-saffron">the beginning</span>.
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-6 text-lg leading-relaxed text-cream/75">
+              Rice Spice Dice keeps growing with its neighbourhood. Here's what we're building
+              next to make shopping with us even easier.
+            </p>
+          </Reveal>
+        </div>
+
+        <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {futureFeatures.map((f, i) => (
+            <Reveal key={f.title} delay={i * 0.06}>
+              <div className="group relative h-full overflow-hidden rounded-3xl border border-cream/15 bg-cream/[0.04] p-7">
+                <span className="absolute right-5 top-5 rounded-full border border-cream/20 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.18em] text-cream/50">
+                  Coming soon
+                </span>
+                <div className="grid h-11 w-11 place-items-center rounded-2xl bg-saffron/20 text-saffron transition-colors group-hover:bg-saffron group-hover:text-ink">
+                  <f.icon className="h-5 w-5" />
+                </div>
+                <h3 className="mt-6 font-display text-xl font-semibold">{f.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-cream/65">{f.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={0.1}>
+          <div className="mt-12 flex flex-wrap items-center gap-4">
+            <a href="#newsletter" className="btn-saffron">
+              Be the first to know <ArrowRight className="h-4 w-4" />
+            </a>
+            <span className="text-sm text-cream/50">
+              Join the list below and we'll let you know the moment each one launches.
+            </span>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -1234,7 +1355,7 @@ function Newsletter() {
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
   return (
-    <section className="relative overflow-hidden bg-ink py-24 text-cream">
+    <section id="newsletter" className="relative overflow-hidden bg-ink py-24 text-cream">
       <div className="grain absolute inset-0 opacity-30" />
       <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-6 lg:grid-cols-2 lg:px-10">
         <Reveal>
@@ -1345,6 +1466,11 @@ function Footer() {
                 </a>
               </li>
               <li>
+                <a href="#future" className="hover:text-saffron-deep">
+                  What's Next
+                </a>
+              </li>
+              <li>
                 <a href="#recipes" className="hover:text-saffron-deep">
                   Recipes
                 </a>
@@ -1398,6 +1524,7 @@ function Home() {
       <Gallery />
       <Testimonials />
       <Visit />
+      <FutureVision />
       <Newsletter />
       <Footer />
       <MobileCta />
