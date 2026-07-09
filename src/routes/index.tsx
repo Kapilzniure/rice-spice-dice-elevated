@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, useScroll, useTransform, useInView } from "motion/react";
 import {
@@ -202,9 +202,12 @@ function Nav() {
             ))}
           </nav>
           <div className="flex items-center gap-3">
-            <a href="#visit" className="btn-saffron hidden md:inline-flex text-sm">
-              Visit Store <ArrowRight className="h-4 w-4" />
-            </a>
+            <Link to="/shop" className="btn-saffron hidden md:inline-flex text-sm">
+              Shop Online <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link to="/shop" className={`btn-ghost hidden md:inline-flex text-sm ${scrolled ? '' : '!border-cream/30 !text-cream hover:!bg-cream/15 hover:!text-cream'}`}>
+              Visit Store
+            </Link>
             <button
               onClick={() => setMobileOpen(true)}
               className="grid h-10 w-10 place-items-center rounded-full md:hidden"
@@ -261,13 +264,13 @@ function Nav() {
             ))}
           </div>
           <div className="border-t border-border p-6">
-            <a
-              href="#visit"
+            <Link
+              to="/shop"
               onClick={() => setMobileOpen(false)}
               className="btn-saffron w-full justify-center text-sm"
             >
               Visit Store <ArrowRight className="h-4 w-4" />
-            </a>
+            </Link>
           </div>
         </nav>
       </div>
@@ -373,15 +376,12 @@ function Hero() {
             transition={{ duration: 0.6, delay: 0.75 }}
             className="mt-10 flex flex-wrap items-center gap-3"
           >
-            <a href="#visit" className="btn-saffron">
-              Visit Store <ArrowRight className="h-4 w-4" />
-            </a>
-            <a
-              href="#categories"
-              className="inline-flex items-center gap-2 rounded-full border border-cream/30 bg-cream/5 px-6 py-3.5 text-sm font-medium text-cream backdrop-blur transition-all hover:bg-cream/15"
-            >
-              Explore Categories <ArrowUpRight className="h-4 w-4" />
-            </a>
+            <Link to="/shop" className="btn-saffron">
+              Shop Online <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link to="/shop" className="inline-flex items-center gap-2 rounded-full border border-cream/30 bg-cream/5 px-6 py-3.5 text-sm font-medium text-cream backdrop-blur transition-all hover:bg-cream/15">
+              Visit Store <ArrowUpRight className="h-4 w-4" />
+            </Link>
           </motion.div>
         </div>
 
@@ -442,6 +442,93 @@ function FeatureStrip() {
             <span className="ml-14 h-1 w-1 rounded-full bg-foreground/25" />
           </div>
         ))}
+      </div>
+    </section>
+  );
+}
+
+/* ----------------------- Community Welcome Strip ----------------------- */
+
+function CommunityWelcome() {
+  const greetings = [
+    { lang: "English", text: "Welcome" },
+    { lang: "Nepali", text: "\u0938\u094d\u0935\u093e\u0917\u0924 \u091b" },
+    { lang: "Hindi", text: "\u0938\u094d\u0935\u093e\u0917\u0924 \u0939\u0948" },
+    { lang: "Arabic", text: "\u0623\u0647\u0644\u0627\u064b \u0648\u0633\u0647\u0644\u0627\u064b" },
+    { lang: "Sinhala", text: "\u0dc3\u0dcf\u0daf\u0dbb\u0dba\u0dd9\u0db1\u0dca" },
+  ];
+  return (
+    <section className="relative overflow-hidden bg-ink py-10 text-cream">
+      <div className="grain absolute inset-0 opacity-20" />
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+        <Reveal>
+          <div className="text-center">
+            <div className="eyebrow mb-4 text-cream/60">A store for every community</div>
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+              {greetings.map((g) => (
+                <div key={g.lang} className="flex flex-col items-center gap-1">
+                  <span className="font-display text-2xl font-semibold tracking-tight md:text-3xl">{g.text}</span>
+                  <span className="text-xs text-cream/50">{g.lang}</span>
+                </div>
+              ))}
+            </div>
+            <p className="mx-auto mt-6 max-w-lg text-sm leading-relaxed text-cream/65">
+              Wherever home is, you&rsquo;ll find its flavours here. Our shelves are stocked for
+              Nepali, Indian, Sri Lankan, Middle Eastern, and Australian families alike.
+            </p>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------- Festival Awareness -------------------------- */
+
+function FestivalStrip() {
+  const festivals = [
+    { name: "Eid al-Adha", icon: Star, note: "Everything for your feast \u2014 fresh lamb, spices & sweets" },
+    { name: "Dashain & Tihar", icon: Sparkles, note: "Authentic Nepali essentials for the biggest celebrations" },
+    { name: "Diwali", icon: Flame, note: "Sweets, dry fruits, ghee & festive pantry staples" },
+    { name: "Lunar New Year", icon: Gift, note: "Fresh produce, noodles & specialty ingredients" },
+  ];
+  return (
+    <section className="relative py-16 md:py-20">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <Reveal>
+          <div className="rounded-3xl border border-border bg-card p-8 shadow-soft md:p-12">
+            <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+              <div>
+                <div className="eyebrow mb-2 flex items-center gap-3">
+                  <span className="h-px w-8 bg-foreground/30" />
+                  Festival-Ready All Year
+                </div>
+                <h3 className="font-display text-2xl font-semibold md:text-3xl">
+                  We know what <span className="italic text-saffron-deep">your celebration</span> needs.
+                </h3>
+              </div>
+              <a href="#visit" className="btn-ghost shrink-0 text-sm">
+                Ask in-store <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {festivals.map((f) => (
+                <div
+                  key={f.name}
+                  className="group flex items-start gap-3 rounded-2xl border border-border/60 bg-secondary/50 p-4 transition-all hover:border-saffron/40 hover:bg-saffron/5"
+                >
+                  <div className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-saffron/20 text-saffron-deep transition-colors group-hover:bg-saffron group-hover:text-ink">
+                    <f.icon className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold">{f.name}</div>
+                    <p className="mt-0.5 text-xs leading-snug text-muted-foreground">{f.note}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -1306,14 +1393,14 @@ function Visit() {
             <div className="img-zoom relative overflow-hidden rounded-[2rem] shadow-lift">
               <iframe
                 title="Rice Spice Dice location"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=151.129%2C-33.986%2C151.145%2C-33.976&layer=mapnik&marker=-33.981%2C151.137"
-                className="h-[520px] w-full grayscale-[15%]"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.5!2d151.131!3d-33.9788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDU4JzQzLjciUyAxNTHCsDA4JzEzLjIiRQ!5e0!3m2!1sen!2sau!4v1"
+                className="h-[520px] w-full"
                 loading="lazy"
               />
               <div className="absolute left-6 top-6 rounded-2xl bg-cream/95 p-4 backdrop-blur shadow-soft">
                 <div className="eyebrow">Now open</div>
                 <div className="mt-1 font-display text-lg font-semibold">Rice Spice Dice</div>
-                <div className="text-xs text-muted-foreground">Kogarah, NSW · 2.4km away</div>
+                <div className="text-xs text-muted-foreground">Railway Parade, Kogarah NSW 2217</div>
               </div>
               <div className="absolute bottom-6 left-6 right-6 flex items-center gap-3 rounded-2xl bg-ink/90 p-4 text-cream backdrop-blur shadow-soft">
                 <Bell className="h-4 w-4 shrink-0 text-saffron" />
@@ -1349,21 +1436,6 @@ const futureFeatures = [
     icon: Heart,
     title: "Loyalty Rewards",
     body: "Earn points on every visit and unlock member-only pricing.",
-  },
-  {
-    icon: Gift,
-    title: "Gift Cards",
-    body: "Share the store you love with family, friends and staff.",
-  },
-  {
-    icon: CalendarDays,
-    title: "Community Events",
-    body: "Tastings, cooking demos and festival celebrations in-store.",
-  },
-  {
-    icon: Bell,
-    title: "Store News & Promotions",
-    body: "Real-time updates on arrivals, specials and seasonal campaigns.",
   },
 ];
 
@@ -1488,16 +1560,26 @@ function MobileCta() {
         visible ? "translate-y-0" : "translate-y-full"
       }`}
     >
-      <a href="tel:+61281234567" className="btn-ghost flex-1 !px-4 !py-3 min-h-[44px] text-sm">
+      <a href="tel:+61281234567" className="btn-ghost flex-1 !px-3 !py-3 min-h-[44px] text-sm">
         <Phone className="h-4 w-4" /> Call
+      </a>
+      <a
+        href="https://wa.me/61XXXXXXXXX"
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full min-h-[44px] !px-3 !py-3 text-sm font-medium text-white"
+        style={{ background: '#25D366' }}
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
       </a>
       <a
         href="https://maps.google.com/?q=Kogarah+NSW"
         target="_blank"
         rel="noreferrer"
-        className="btn-saffron flex-[1.4] !px-4 !py-3 min-h-[44px] text-sm"
+        className="btn-saffron flex-[1.2] !px-3 !py-3 min-h-[44px] text-sm"
       >
-        Get Directions <ArrowRight className="h-4 w-4" />
+        Directions <ArrowRight className="h-4 w-4" />
       </a>
     </div>
   );
@@ -1521,6 +1603,35 @@ function Footer() {
               A family-run international grocery in Kogarah — bringing warmth, freshness, and the
               flavours of home to Sydney's south.
             </p>
+            <div className="mt-6 flex items-center gap-3">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noreferrer"
+                className="grid h-9 w-9 place-items-center rounded-full bg-secondary text-foreground/70 transition-all hover:bg-saffron hover:text-ink"
+                aria-label="Facebook"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noreferrer"
+                className="grid h-9 w-9 place-items-center rounded-full bg-secondary text-foreground/70 transition-all hover:bg-saffron hover:text-ink"
+                aria-label="Instagram"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              </a>
+              <a
+                href="https://wa.me/61XXXXXXXXX"
+                target="_blank"
+                rel="noreferrer"
+                className="grid h-9 w-9 place-items-center rounded-full bg-secondary text-foreground/70 transition-all hover:bg-[#25D366] hover:text-white"
+                aria-label="WhatsApp"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              </a>
+            </div>
           </div>
           <div>
             <div className="eyebrow mb-4">Store</div>
@@ -1541,11 +1652,6 @@ function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#future" className="hover:text-saffron-deep">
-                  What's Next
-                </a>
-              </li>
-              <li>
                 <a href="#recipes" className="hover:text-saffron-deep">
                   Recipes
                 </a>
@@ -1560,24 +1666,41 @@ function Footer() {
               <li><a href="tel:+61281234567" className="transition-colors hover:text-saffron-deep">(02) 8123 4567</a></li>
               <li><a href="mailto:hello@ricespicedice.com.au" className="transition-colors hover:text-saffron-deep">hello@ricespicedice.com.au</a></li>
             </ul>
+            <div className="mt-6">
+              <div className="eyebrow mb-2">Follow Us</div>
+              <div className="flex items-center gap-2">
+                <a href="https://facebook.com" target="_blank" rel="noreferrer" className="text-sm text-foreground/60 hover:text-saffron-deep">Facebook</a>
+                <span className="text-foreground/30">·</span>
+                <a href="https://instagram.com" target="_blank" rel="noreferrer" className="text-sm text-foreground/60 hover:text-saffron-deep">Instagram</a>
+              </div>
+            </div>
           </div>
         </div>
         <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-border pt-8 text-xs text-muted-foreground md:flex-row md:items-center">
           <div>© {new Date().getFullYear()} Rice Spice Dice · Kogarah, NSW</div>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-foreground">
-              Privacy
-            </a>
-            <a href="#" className="hover:text-foreground">
-              Terms
-            </a>
-            <a href="#" className="hover:text-foreground">
-              Accessibility
-            </a>
-          </div>
+          <div className="text-foreground/40">Fresh food. Real quality. Every day.</div>
         </div>
       </div>
     </footer>
+  );
+}
+
+/* ----------------------------- WhatsApp Float ----------------------------- */
+
+function WhatsAppFloat() {
+  return (
+    <a
+      href="https://wa.me/61XXXXXXXXX?text=Hi%20Rice%20Spice%20Dice%2C%20I%27d%20like%20to%20enquire%20about..."
+      target="_blank"
+      rel="noreferrer"
+      className="whatsapp-float"
+      aria-label="Chat on WhatsApp"
+    >
+      <span className="wa-ring" />
+      <svg viewBox="0 0 24 24" fill="currentColor" className="relative h-6 w-6">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+      </svg>
+    </a>
   );
 }
 
@@ -1595,11 +1718,13 @@ function Home() {
       <Nav />
       <Hero />
       <FeatureStrip />
+      <CommunityWelcome />
       <TodaysArrivals />
       <ChickenExperience />
       <Categories />
       <InternationalFlavours />
       <WeeklySpecials />
+      <FestivalStrip />
       <Recipes />
       <WhyPeopleLove />
       <Gallery />
@@ -1608,6 +1733,7 @@ function Home() {
       <FutureVision />
       <Newsletter />
       <Footer />
+      <WhatsAppFloat />
       <MobileCta />
     </main>
   );

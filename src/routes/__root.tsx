@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { CartProvider } from "../lib/cart-context";
 import {
   Outlet,
   Link,
@@ -92,6 +93,49 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap",
       },
     ],
+    scripts: [
+      {
+        type: 'application/ld+json',
+        children: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'GroceryStore',
+          name: 'Rice Spice Dice',
+          description: 'A premium international grocery in Kogarah NSW. Farm-fresh produce, premium halal chicken, authentic spices and world groceries.',
+          url: 'https://ricespicedice.com.au',
+          telephone: '(02) 8123 4567',
+          email: 'hello@ricespicedice.com.au',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Railway Parade',
+            addressLocality: 'Kogarah',
+            addressRegion: 'NSW',
+            postalCode: '2217',
+            addressCountry: 'AU',
+          },
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: -33.981,
+            longitude: 151.137,
+          },
+          openingHoursSpecification: [
+            { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '08:00', closes: '20:30' },
+            { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: '08:00', closes: '21:00' },
+            { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Sunday', opens: '09:00', closes: '19:00' },
+          ],
+          priceRange: '$$',
+          servesCuisine: ['International', 'Indian', 'Nepali', 'Middle Eastern', 'Sri Lankan'],
+          hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: 'Store Products',
+            itemListElement: [
+              { '@type': 'Offer', itemOffered: { '@type': 'Product', name: 'Premium Halal Chicken', description: 'Cut fresh daily, 100% Halal certified' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Product', name: 'Fresh Produce', description: 'Farm-fresh seasonal fruits and vegetables' } },
+              { '@type': 'Offer', itemOffered: { '@type': 'Product', name: 'International Spices', description: 'Authentic spices from Nepal, India, Sri Lanka and Middle East' } },
+            ],
+          },
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -118,7 +162,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <CartProvider>
+        <Outlet />
+      </CartProvider>
     </QueryClientProvider>
   );
 }
